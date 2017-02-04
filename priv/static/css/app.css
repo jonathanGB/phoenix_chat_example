@@ -53,5 +53,15 @@ code {
   font-size: 80%;
 }
 
+#create-convo {
+	position: relative;
+	top: 8px;
+	font-weight: bold;
+}
+
+#create-user [type=submit] {
+	margin-top: 5px;
+}
+
 
 /*# sourceMappingURL=app.css.map*/

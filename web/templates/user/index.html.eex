@@ -1,0 +1,33 @@
+<h2>Login</h2>
+<form class="form" id="create-user">
+	<input class="form-control" type="text" name="username" placeholder="your username">
+	<input class="form-control" type="tel" name="tel" placeholder="your cell number">
+	<input class="btn btn-primary" type="submit" name="submit" value="Login">
+</form>
+
+<script type="text/javascript">
+	document.getElementById('create-user').onsubmit = function(e) {
+		e.preventDefault()
+
+		let username = e.target[0].value.trim();
+		let tel = e.target[1].value.trim();
+
+		if (username && tel) {
+			fetch('/user', {
+				method: 'POST',
+				body: {
+					username,
+					tel
+				}
+			})
+			.then(response => {
+				if (response.ok) {
+					windowStorage.setItem('username', username)
+					window.location.replace('/convos')
+				} else {
+					alert('error logging in')
+				}
+			})
+		}
+	}
+</script>
