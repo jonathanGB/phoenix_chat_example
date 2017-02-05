@@ -13,20 +13,28 @@
 		let tel = e.target[1].value.trim();
 
 		if (username && tel) {
-			fetch('/user', {
+			fetch('/api/user', {
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
 				method: 'POST',
-				body: {
+				body: JSON.stringify({
 					username,
 					tel
-				}
+				})
 			})
 			.then(response => {
-				if (response.ok) {
-					windowStorage.setItem('username', username)
-					window.location.replace('/convos')
-				} else {
-					alert('error logging in')
-				}
+				response.json()
+				.then(json => {
+					console.log(`json: ${JSON.stringify(json)}`)
+					if (json.ok != "error") {
+						sessionStorage.setItem('username', username)
+						window.location.replace('/convos')
+					} else {
+						alert('error logging in')
+					}
+				})
 			})
 		}
 	}
