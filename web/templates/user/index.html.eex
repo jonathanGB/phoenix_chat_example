@@ -24,17 +24,14 @@
 					tel
 				})
 			})
-			.then(response => {
-				response.json()
-				.then(json => {
-					console.log(`json: ${JSON.stringify(json)}`)
-					if (json.ok != "error") {
-						sessionStorage.setItem('username', username)
-						window.location.replace('/convos')
-					} else {
-						alert('error logging in')
-					}
-				})
+			.then(response => response.json())
+			.then(json => {
+				if (json.ok) {
+					sessionStorage.setItem('username', username)
+					window.location.replace('/convos')
+				} else {
+					alert('error logging in')
+				}
 			})
 		}
 	}

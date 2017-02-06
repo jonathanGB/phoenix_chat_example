@@ -8,11 +8,21 @@ defmodule Chat.UserController do
   end
 
 	def create(conn, %{"tel" => telInput, "username" => usernameInput}) do
-		User.changeset(%User{}, %{username: usernameInput, tel: telInput})
-  	|> Repo.insert_or_update
-		|> (fn (flag) ->
-			Plug.Conn.put_resp_cookie(conn, "username", usernameInput)
-			json conn, %{ok: flag}
-  	end).()
+		result =
+		  case Repo.get_by(User, username: usernameInput) do
+		    nil  -> %User{username: usernameInput, tel: telInput}
+		    user -> user
+		  end
+		  |> User.changeset(%{username: usernameInput, tel: telInput})
+		  |> Repo.insert_or_update
+
+
+		case result do
+		  {:ok, _}       ->
+				cookieConn = Plug.Conn.put_resp_cookie(conn, "username", usernameInput)
+				json cookieConn, %{ok: true}
+		  {:error, _} ->
+				json conn, %{ok: false}
+		end
 	end
 end
