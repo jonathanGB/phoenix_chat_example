@@ -28,7 +28,7 @@
 			.then(json => {
 				if (json.ok) {
 					sessionStorage.setItem('username', username)
-					window.location.replace('/convos')
+					window.location.assign('/convos')
 				} else {
 					alert('error logging in')
 				}

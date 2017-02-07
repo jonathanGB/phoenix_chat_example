@@ -17,7 +17,7 @@ defmodule Chat.Router do
 
     get "/", UserController, :index # login page
 
-		#get "/convos", ConvoController, :index # view to see all convos
+		get "/convos", ConvoController, :index # view to see all convos
 		#get "/convos/:name", ConvoController, :show # view to see current convo
 		#post "/convos", ConvoController, :create # view to create convo
 
